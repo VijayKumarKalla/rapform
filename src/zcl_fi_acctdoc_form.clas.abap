@@ -178,6 +178,7 @@ ENDMETHOD.
 
         rt_v_xml = lo_fdp_api->read_to_xml_v2( it_select = lt_keys ).
 
+
       CLEANUP.
         mc_duplicate_call = lv_previous_guard.
         " Runs only if an exception leaves the TRY block.

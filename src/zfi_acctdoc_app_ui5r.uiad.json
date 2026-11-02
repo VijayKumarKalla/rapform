@@ -1,0 +1,34 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "Fiori List Report app for Accounting Documents with RAP Form",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "Accounting Documents"
+  },
+  "ui5AppDetails": {
+    "appId": "zfi_acctdoc_lr"
+  },
+  "navigation": {
+    "targetMappingId": "ZFI_ACCTDOC_APP_UI5R_TM",
+    "semanticObject": "AccountingDocument",
+    "action": "display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "ZFI_ACCTDOC_APP_UI5R_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Accounting Documents"
+      }
+    }
+  ]
+}

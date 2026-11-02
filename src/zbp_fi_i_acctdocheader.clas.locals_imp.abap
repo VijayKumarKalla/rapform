@@ -12,7 +12,13 @@ CLASS lhc_header DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
       rba_item FOR READ
         IMPORTING keys_rba FOR READ Header\_Item FULL result_requested
-        RESULT result LINK association_links.
+        RESULT result LINK association_links,
+      DisplaySummary FOR MODIFY
+            keys FOR ACTION Header~DisplaySummary RESULT result,
+      ShowItemCount FOR MODIFY
+            keys FOR ACTION Header~ShowItemCount RESULT result,
+      CheckDocumentBalance FOR MODIFY
+            keys FOR ACTION Header~CheckDocumentBalance RESULT result.
 ENDCLASS.
 
 
@@ -95,6 +101,189 @@ CLASS lhc_header IMPLEMENTATION.
       ENDLOOP.
     ENDLOOP.
   ENDMETHOD.
+
+
+
+METHOD displaySummary.
+
+  LOOP AT keys ASSIGNING FIELD-SYMBOL(<key>).
+
+    "Read selected Accounting Document Header
+    SELECT SINGLE
+      FROM zfi_i_acctdocheader
+      FIELDS companycode,
+             fiscalyear,
+             accountingdocument,
+             accountingdocumenttype,
+             documentdate,
+             postingdate,
+             accountingdocumentheadertext,
+             documentreferenceid,
+             transactioncurrency,
+             accountingdocumentcreationdate
+      WHERE companycode        = @<key>-companycode
+        AND fiscalyear         = @<key>-fiscalyear
+        AND accountingdocument = @<key>-accountingdocument
+      INTO @DATA(ls_header).
+
+    IF sy-subrc = 0.
+
+      "Return the selected entity as action result
+      APPEND VALUE #(
+        %tky   = <key>-%tky
+        %param = CORRESPONDING #( ls_header )
+      ) TO result.
+
+      "Summary message 1: Company Code
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-information
+          text     = |Company Code: { ls_header-companycode }|
+        )
+      ) TO reported-header.
+
+      "Summary message 2: Fiscal Year
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-information
+          text     = |Fiscal Year: { ls_header-fiscalyear }|
+        )
+      ) TO reported-header.
+
+      "Summary message 3: Accounting Document
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-information
+          text     = |Accounting Document: { ls_header-accountingdocument }|
+        )
+      ) TO reported-header.
+
+    ELSE.
+
+      "Document not found
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-error
+          text     = 'Accounting Document not found.'
+        )
+      ) TO reported-header.
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
+
+
+
+
+METHOD showItemCount.
+
+  LOOP AT keys ASSIGNING FIELD-SYMBOL(<key>).
+
+    "Count accounting line items for the selected document
+    SELECT COUNT( * )
+      FROM zfi_i_acctdocitem
+      WHERE companycode        = @<key>-companycode
+        AND fiscalyear         = @<key>-fiscalyear
+        AND accountingdocument = @<key>-accountingdocument
+      INTO @DATA(lv_item_count).
+
+    "Return the selected header as the action result
+    APPEND VALUE #(
+      %tky   = <key>-%tky
+      %param = CORRESPONDING #( <key> )
+    ) TO result.
+
+    "Display the item count
+    APPEND VALUE #(
+      %tky = <key>-%tky
+      %msg = new_message_with_text(
+        severity = if_abap_behv_message=>severity-success
+        text     = |This document contains { lv_item_count } accounting line items.|
+      )
+    ) TO reported-header.
+
+  ENDLOOP.
+
+ENDMETHOD.
+
+
+
+METHOD checkDocumentBalance.
+
+  LOOP AT keys ASSIGNING FIELD-SYMBOL(<key>).
+
+    "Calculate total debit and credit amounts
+    SELECT
+      FROM zfi_i_acctdocitem
+      FIELDS
+        debitcreditcode,
+        SUM( amountincompanycodecurrency ) AS total_amount
+      WHERE companycode        = @<key>-companycode
+        AND fiscalyear         = @<key>-fiscalyear
+        AND accountingdocument = @<key>-accountingdocument
+      GROUP BY debitcreditcode
+      INTO TABLE @DATA(lt_totals).
+
+    DATA: lv_debit  TYPE zfi_i_acctdocitem-amountincompanycodecurrency,
+          lv_credit TYPE zfi_i_acctdocitem-amountincompanycodecurrency.
+
+    CLEAR: lv_debit, lv_credit.
+
+    LOOP AT lt_totals ASSIGNING FIELD-SYMBOL(<total>).
+
+      CASE <total>-debitcreditcode.
+
+        WHEN 'S'.
+          lv_debit = <total>-total_amount.
+
+        WHEN 'H'.
+          lv_credit = <total>-total_amount.
+
+      ENDCASE.
+
+    ENDLOOP.
+
+    "Calculate difference
+    DATA(lv_difference) = lv_debit - lv_credit.
+
+    "Return selected header
+    APPEND VALUE #(
+      %tky   = <key>-%tky
+      %param = CORRESPONDING #( <key> )
+    ) TO result.
+
+    "Report balance status
+    IF lv_difference = 0.
+
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-success
+          text = 'Accounting Document is balanced.'
+        )
+      ) TO reported-header.
+
+    ELSE.
+
+      APPEND VALUE #(
+        %tky = <key>-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-warning
+          text = |Document is NOT balanced. Difference: { lv_difference }|
+        )
+      ) TO reported-header.
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
 
 ENDCLASS.
 

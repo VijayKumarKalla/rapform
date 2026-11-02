@@ -13,6 +13,9 @@ define behavior for ZFI_I_AcctDocHeader alias Header
 
   association _Item;
   // REMOVED: PreviewPDF, DownloadPDF, DownloadXML actions.
+  action DisplaySummary result [1] $self;
+  action ShowItemCount result [1] $self;
+  action CheckDocumentBalance result [1] $self;
 }
 
 define behavior for ZFI_I_AcctDocItem alias Item

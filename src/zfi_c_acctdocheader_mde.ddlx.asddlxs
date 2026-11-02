@@ -20,283 +20,257 @@
 annotate entity ZFI_C_AcctDocHeader with
 {
 
-    /*==========================================================*/
-    /* OBJECT PAGE FACET DEFINITIONS                            */
-    /*==========================================================*/
-
-    @UI.facet: [
-
-        /*------------------------------------------------------*/
-        /* SECTION 1: DOCUMENT INFORMATION                      */
-        /*------------------------------------------------------*/
-
-        {
-            id:       'GeneralInfo',
-            purpose:  #STANDARD,
-            type:     #IDENTIFICATION_REFERENCE,
-            label:    'Document Information',
-            position: 10
-        },
-
-        /*------------------------------------------------------*/
-        /* SECTION 2: DOCUMENT CENTER                            */
-        /*------------------------------------------------------*/
-
-        {
-            id:              'DocumentFiles',
-            purpose:         #STANDARD,
-            type:            #FIELDGROUP_REFERENCE,
-            label:           'Document Center',
-            targetQualifier: 'DocumentFiles',
-            position:        20
-        },
-
-        /*------------------------------------------------------*/
-        /* SECTION 3: ACCOUNTING LINE ITEMS                     */
-        /*------------------------------------------------------*/
-
-        {
-            id:            'Items',
-            purpose:       #STANDARD,
-            type:          #LINEITEM_REFERENCE,
-            label:         'Accounting Line Items',
-            targetElement: '_Item',
-            position:      30
-        }
-
-    ]
-
-    /*==========================================================*/
-    /* COMPANY CODE                                             */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Company Code'
-
-    @UI.lineItem: [
-        { position: 10, importance: #HIGH }
-    ]
-
-    @UI.selectionField: [
-        { position: 10 }
-    ]
-
-    @UI.identification: [
-        { position: 10 }
-    ]
-
-    CompanyCode;
-
-
-    /*==========================================================*/
-    /* FISCAL YEAR                                              */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Fiscal Year'
-
-    @UI.lineItem: [
-        { position: 20, importance: #HIGH }
-    ]
-
-    @UI.selectionField: [
-        { position: 20 }
-    ]
-
-    @UI.identification: [
-        { position: 20 }
-    ]
-
-    FiscalYear;
-
-
-    /*==========================================================*/
-    /* ACCOUNTING DOCUMENT NUMBER                               */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Accounting Document'
-
-    @UI.lineItem: [
-        { position: 30, importance: #HIGH }
-    ]
-
-    @UI.selectionField: [
-        { position: 30 }
-    ]
-
-    @UI.identification: [
-        { position: 30 }
-    ]
-
-    AccountingDocument;
-
-
-    /*==========================================================*/
-    /* ACCOUNTING DOCUMENT TYPE                                 */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Document Type'
-
-    @UI.lineItem: [
-        { position: 40, importance: #MEDIUM }
-    ]
-
-    @UI.selectionField: [
-        { position: 40 }
-    ]
-
-    @UI.identification: [
-        { position: 40 }
-    ]
-
-    AccountingDocumentType;
-
-
-    /*==========================================================*/
-    /* POSTING DATE                                             */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Posting Date'
-
-    @UI.lineItem: [
-        { position: 50, importance: #HIGH }
-    ]
-
-    @UI.selectionField: [
-        { position: 50 }
-    ]
-
-    @UI.identification: [
-        { position: 50 }
-    ]
-
-    PostingDate;
-
-
-    /*==========================================================*/
-    /* DOCUMENT DATE                                            */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Document Date'
-
-    @UI.lineItem: [
-        { position: 60, importance: #LOW }
-    ]
-
-    @UI.identification: [
-        { position: 60 }
-    ]
-
-    DocumentDate;
-
-
-    /*==========================================================*/
-    /* DOCUMENT REFERENCE NUMBER                                */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Reference Number'
-
-    @UI.lineItem: [
-        { position: 70, importance: #LOW }
-    ]
-
-    @UI.identification: [
-        { position: 70 }
-    ]
-
-    DocumentReferenceID;
-
-
-    /*==========================================================*/
-    /* DOCUMENT HEADER TEXT                                     */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Document Description'
-
-    @UI.identification: [
-        { position: 80 }
-    ]
-
-    AccountingDocumentHeaderText;
-
-
-    /*==========================================================*/
-    /* TECHNICAL HEADER FIELDS                                  */
-    /*==========================================================*/
-
-    @UI.hidden: true
-    TransactionCurrency;
-
-    @UI.hidden: true
-    AccountingDocumentCreationDate;
-
-
-    /*==========================================================*/
-    /* DOCUMENT CENTER - PDF PREVIEW                            */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Preview PDF'
-
-    @UI.fieldGroup: [
-        {
-            qualifier: 'DocumentFiles',
-            position: 10
-        }
-    ]
-
-    PreviewPDF;
-
-
-    /*==========================================================*/
-    /* DOCUMENT CENTER - PDF DOWNLOAD                           */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Download PDF'
-
-    @UI.fieldGroup: [
-        {
-            qualifier: 'DocumentFiles',
-            position: 20
-        }
-    ]
-
-    Attachment;
-
-
-    /*==========================================================*/
-    /* DOCUMENT CENTER - XML DOWNLOAD                           */
-    /*==========================================================*/
-
-    @EndUserText.label: 'Download Form XML'
-
-    @UI.fieldGroup: [
-        {
-            qualifier: 'DocumentFiles',
-            position: 30
-        }
-    ]
-
-    XMLAttachment;
-
-
-    /*==========================================================*/
-    /* FILE NAME AND MIME TYPE HELPER FIELDS                    */
-    /*==========================================================*/
-
-    @UI.hidden: true
-    Filename;
-
-    @UI.hidden: true
-    MimeType;
-
-    @UI.hidden: true
-    PreviewFilename;
-
-    @UI.hidden: true
-    PreviewMimeType;
-
-    @UI.hidden: true
-    XMLFilename;
-
-    @UI.hidden: true
-    XMLMimeType;
+  /*==========================================================*/
+  /* OBJECT PAGE FACET DEFINITIONS                            */
+  /*==========================================================*/
+
+  @UI.facet: [
+
+      /* SECTION 1: DOCUMENT INFORMATION */
+      {
+          id:       'GeneralInfo',
+          purpose:  #STANDARD,
+          type:     #IDENTIFICATION_REFERENCE,
+          label:    'Document Information',
+          position: 10
+      },
+
+      /* SECTION 2: DOCUMENT CENTER */
+      {
+          id:              'DocumentFiles',
+          purpose:         #STANDARD,
+          type:            #FIELDGROUP_REFERENCE,
+          label:           'Document Center',
+          targetQualifier: 'DocumentFiles',
+          position:        20
+      },
+
+      /* SECTION 3: ACCOUNTING LINE ITEMS */
+      {
+          id:            'Items',
+          purpose:       #STANDARD,
+          type:          #LINEITEM_REFERENCE,
+          label:         'Accounting Line Items',
+          targetElement: '_Item',
+          position:      30
+      }
+  ]
+
+  /*==========================================================*/
+  /* COMPANY CODE                                             */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Company Code'
+  @UI.lineItem: [
+      { position: 10, importance: #HIGH }
+  ]
+  @UI.selectionField: [
+      { position: 10 }
+  ]
+  @UI.identification: [
+      { position: 10 }
+  ]
+  CompanyCode;
+
+  /*==========================================================*/
+  /* FISCAL YEAR                                              */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Fiscal Year'
+  @UI.lineItem: [
+      { position: 20, importance: #HIGH }
+  ]
+  @UI.selectionField: [
+      { position: 20 }
+  ]
+  @UI.identification: [
+      { position: 20 }
+  ]
+  FiscalYear;
+
+  /*==========================================================*/
+  /* ACCOUNTING DOCUMENT NUMBER                               */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Accounting Document'
+  @UI.lineItem: [
+   { position: 30, importance: #HIGH },
+   {
+       type: #FOR_ACTION,
+       dataAction: 'DisplaySummary',
+       label: 'Display Summary',
+       criticality: 'AccountingDocument'
+   },
+   {
+  position: 100,
+  type: #FOR_ACTION,
+  dataAction: 'ShowItemCount',
+  label: 'Show Item Count',
+  importance: #HIGH
+  },
+  {
+  position: 200,
+  type: #FOR_ACTION,
+  dataAction: 'checkDocumentBalance',
+  label: 'Check Document Balance',
+  importance: #HIGH
+  }
+  ]
+  @UI.selectionField: [
+      { position: 30 }
+  ]
+  @UI.identification: [
+      { position: 30 },
+      {
+          position: 90,
+          type: #FOR_ACTION,
+          dataAction: 'DisplaySummary',
+          label: 'Display Summary',
+          importance: #LOW,
+          criticalityRepresentation: #WITHOUT_ICON
+
+      }
+  ]
+
+  AccountingDocument;
+
+  /*==========================================================*/
+  /* ACCOUNTING DOCUMENT TYPE                                 */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Document Type'
+  @UI.lineItem: [
+      { position: 40, importance: #MEDIUM }
+  ]
+  @UI.selectionField: [
+      { position: 40 }
+  ]
+  @UI.identification: [
+      { position: 40 }
+  ]
+  AccountingDocumentType;
+
+  /*==========================================================*/
+  /* POSTING DATE                                             */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Posting Date'
+  @UI.lineItem: [
+      { position: 50, importance: #HIGH }
+  ]
+  @UI.selectionField: [
+      { position: 50 }
+  ]
+  @UI.identification: [
+      { position: 50 }
+  ]
+  PostingDate;
+
+  /*==========================================================*/
+  /* DOCUMENT DATE                                            */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Document Date'
+  @UI.lineItem: [
+      { position: 60, importance: #LOW }
+  ]
+  @UI.identification: [
+      { position: 60 }
+  ]
+  DocumentDate;
+
+  /*==========================================================*/
+  /* DOCUMENT REFERENCE NUMBER                                */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Reference Number'
+  @UI.lineItem: [
+      { position: 70, importance: #LOW }
+  ]
+  @UI.identification: [
+      { position: 70 }
+  ]
+  DocumentReferenceID;
+
+  /*==========================================================*/
+  /* DOCUMENT HEADER TEXT                                     */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Document Description'
+  @UI.identification: [
+      { position: 80 }
+  ]
+  AccountingDocumentHeaderText;
+
+  /*==========================================================*/
+  /* TECHNICAL HEADER FIELDS                                  */
+  /*==========================================================*/
+
+  @UI.hidden: true
+  TransactionCurrency;
+
+  @UI.hidden: true
+  AccountingDocumentCreationDate;
+
+  /*==========================================================*/
+  /* DOCUMENT CENTER - PDF PREVIEW                            */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Preview PDF'
+  @UI.fieldGroup: [
+      {
+          qualifier: 'DocumentFiles',
+          position: 10
+      }
+  ]
+  PreviewPDF;
+
+  /*==========================================================*/
+  /* DOCUMENT CENTER - PDF DOWNLOAD                           */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Download PDF'
+  @UI.fieldGroup: [
+      {
+          qualifier: 'DocumentFiles',
+          position: 20
+      }
+  ]
+  Attachment;
+
+  /*==========================================================*/
+  /* DOCUMENT CENTER - XML DOWNLOAD                           */
+  /*==========================================================*/
+
+  @EndUserText.label: 'Download Form XML'
+  @UI.fieldGroup: [
+      {
+          qualifier: 'DocumentFiles',
+          position: 30
+      }
+  ]
+  XMLAttachment;
+
+  /*==========================================================*/
+  /* FILE NAME AND MIME TYPE HELPER FIELDS                    */
+  /*==========================================================*/
+
+  @UI.hidden: true
+  Filename;
+
+  @UI.hidden: true
+  MimeType;
+
+  @UI.hidden: true
+  PreviewFilename;
+
+  @UI.hidden: true
+  PreviewMimeType;
+
+  @UI.hidden: true
+  XMLFilename;
+
+  @UI.hidden: true
+  XMLMimeType;
 
 }
