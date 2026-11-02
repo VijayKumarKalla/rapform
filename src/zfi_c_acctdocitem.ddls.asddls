@@ -2,6 +2,7 @@
 @EndUserText.label: 'Accounting Document Item (Projection)'
 @Metadata.ignorePropagatedAnnotations: true
 @Metadata.allowExtensions: true
+@OData.applySupportedForAggregation: #FULL
 // REMOVED: @ObjectModel.supportedCapabilities: [#OUTPUT_FORM_DATA_PROVIDER]
 // Only the ROOT (ZFI_C_AcctDocHeader) is the form data provider. The item still reaches the
 // form because it is a composition child exposed in the service definition.
@@ -23,17 +24,18 @@ define view entity ZFI_C_AcctDocItem
       ProfitCenter,
       CostCenter,
       DocumentItemText,
-
+     // @Aggregation.default: #SUM
       @Semantics.amount.currencyCode: 'CompanyCodeCurrency'
       AmountInCompanyCodeCurrency,
       CompanyCodeCurrency,
-
+     // @Aggregation.default: #SUM
       @Semantics.amount.currencyCode: 'TransactionCurrency'
       AmountInTransactionCurrency,
       TransactionCurrency,
 
       _Header : redirected to parent ZFI_C_AcctDocHeader
 }
+
 
 /*------------------------------------------------------------*/
 /* DEVELOPER NOTES                                             */

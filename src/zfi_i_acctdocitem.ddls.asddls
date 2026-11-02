@@ -58,6 +58,7 @@ define view entity ZFI_I_AcctDocItem
   /* Company Code Currency Amount                             */
   /*----------------------------------------------------------*/
       @Semantics.amount.currencyCode: 'CompanyCodeCurrency'
+      @Aggregation.default: #SUM
       AmountInCompanyCodeCurrency,
       CompanyCodeCurrency,
 
@@ -65,6 +66,7 @@ define view entity ZFI_I_AcctDocItem
   /* Transaction Currency Amount                              */
   /*----------------------------------------------------------*/
       @Semantics.amount.currencyCode: 'TransactionCurrency'
+      @Aggregation.default: #SUM
       AmountInTransactionCurrency,
       TransactionCurrency,
 

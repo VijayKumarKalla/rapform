@@ -1,91 +1,259 @@
 @Metadata.layer: #CORE
+/*==============================================================*/
+/* DEFAULT SORT ORDER - ACCOUNTING LINE ITEMS                   */
+/*==============================================================*/
+
+@UI.presentationVariant: [
+    {
+        sortOrder: [
+            {
+                by:        'AccountingDocumentItem',
+                direction: #ASC
+            }
+        ],
+        visualizations: [
+            {
+                type: #AS_LINEITEM
+            }
+        ]
+    }
+]
+/*==============================================================*/
+/* OBJECT PAGE HEADER INFORMATION                              */
+/*==============================================================*/
 
 @UI.headerInfo: {
-  typeName:       'Line Item',
-  typeNamePlural: 'Line Items'
+    typeName:       'Accounting Line Item',
+    typeNamePlural: 'Accounting Line Items',
+    title: {
+        type:  #STANDARD,
+        value: 'AccountingDocumentItem'
+    },
+    description: {
+        type:  #STANDARD,
+        value: 'DocumentItemText'
+    }
 }
 
 annotate entity ZFI_C_AcctDocItem with
 {
-  /*----------------------------------------------------------*/
-  /* Parent Key Fields - Hidden from Item Table               */
-  /*----------------------------------------------------------*/
-  @UI.hidden: true
-  CompanyCode;
 
-  @UI.hidden: true
-  FiscalYear;
+    /*==========================================================*/
+    /* PARENT KEY FIELDS                                        */
+    /*==========================================================*/
 
-  @UI.hidden: true
-  AccountingDocument;
+    @UI.hidden: true
+    CompanyCode;
 
-  /*----------------------------------------------------------*/
-  /* Accounting Document Item Number                          */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 10, importance: #HIGH }
-  ]
-  AccountingDocumentItem;
+    @UI.hidden: true
+    FiscalYear;
 
-  /*----------------------------------------------------------*/
-  /* General Ledger Information                               */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 20, importance: #HIGH }
-  ]
-  GLAccount;
+    @UI.hidden: true
+    AccountingDocument;
 
-  @UI.lineItem: [
-    { position: 30, importance: #MEDIUM }
-  ]
-  FinancialAccountType;
 
-  @UI.lineItem: [
-    { position: 40, importance: #MEDIUM }
-  ]
-  DebitCreditCode;
+    /*==========================================================*/
+    /* ACCOUNTING DOCUMENT ITEM NUMBER                          */
+    /*==========================================================*/
 
-  /*----------------------------------------------------------*/
-  /* Company Code Currency Amount                             */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 50, importance: #HIGH }
-  ]
-  AmountInCompanyCodeCurrency;
+    @EndUserText.label: 'Line Item'
 
-  @UI.hidden: true
-  CompanyCodeCurrency;
+    @UI.lineItem: [
+        { position: 10, importance: #HIGH }
+    ]
 
-  /*----------------------------------------------------------*/
-  /* Transaction Currency Amount                              */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 60, importance: #LOW }
-  ]
-  AmountInTransactionCurrency;
+    @UI.identification: [
+        { position: 10 }
+    ]
 
-  @UI.hidden: true
-  TransactionCurrency;
+    AccountingDocumentItem;
 
-  /*----------------------------------------------------------*/
-  /* Supplier Information                                     */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 70, importance: #MEDIUM }
-  ]
-  Supplier;
 
-  /*----------------------------------------------------------*/
-  /* Document Item Description                                */
-  /*----------------------------------------------------------*/
-  @UI.lineItem: [
-    { position: 80, importance: #LOW }
-  ]
-  DocumentItemText;
+    /*==========================================================*/
+    /* GENERAL LEDGER ACCOUNT                                   */
+    /*==========================================================*/
 
-  /*----------------------------------------------------------*/
-  /* Additional Technical Fields                              */
-  /*----------------------------------------------------------*/
-  @UI.hidden: true
-  PostingDate;
+    @EndUserText.label: 'G/L Account'
+
+    @UI.lineItem: [
+        { position: 20, importance: #HIGH }
+    ]
+
+    @UI.identification: [
+        { position: 20 }
+    ]
+
+    GLAccount;
+
+
+    /*==========================================================*/
+    /* FINANCIAL ACCOUNT TYPE                                   */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Account Type'
+
+    @UI.lineItem: [
+        { position: 30, importance: #MEDIUM }
+    ]
+
+    @UI.identification: [
+        { position: 30 }
+    ]
+
+    FinancialAccountType;
+
+
+    /*==========================================================*/
+    /* DEBIT / CREDIT INDICATOR                                 */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Debit / Credit'
+
+    @UI.lineItem: [
+        { position: 40, importance: #HIGH }
+    ]
+
+    @UI.identification: [
+        { position: 40 }
+    ]
+
+    DebitCreditCode;
+
+
+    /*==========================================================*/
+    /* COMPANY CODE CURRENCY AMOUNT                             */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Amount in Company Code Currency'
+
+    @UI.lineItem: [
+        { position: 50, importance: #HIGH }
+    ]
+
+    @UI.identification: [
+        { position: 50 }
+    ]
+
+    AmountInCompanyCodeCurrency;
+
+    /* Currency field retained for amount semantics */
+
+    @UI.hidden: true
+    CompanyCodeCurrency;
+
+
+    /*==========================================================*/
+    /* TRANSACTION CURRENCY AMOUNT                              */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Amount in Transaction Currency'
+
+    @UI.lineItem: [
+        { position: 60, importance: #MEDIUM }
+    ]
+
+    @UI.identification: [
+        { position: 60 }
+    ]
+
+    AmountInTransactionCurrency;
+
+    /* Currency field retained for amount semantics */
+
+    @UI.hidden: true
+    TransactionCurrency;
+
+
+    /*==========================================================*/
+    /* SUPPLIER INFORMATION                                     */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Supplier'
+
+    @UI.lineItem: [
+        { position: 70, importance: #MEDIUM }
+    ]
+
+    @UI.identification: [
+        { position: 70 }
+    ]
+
+    Supplier;
+
+
+    /*==========================================================*/
+    /* CUSTOMER INFORMATION                                     */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Customer'
+
+    @UI.lineItem: [
+        { position: 80, importance: #MEDIUM }
+    ]
+
+    @UI.identification: [
+        { position: 80 }
+    ]
+
+    Customer;
+
+
+    /*==========================================================*/
+    /* PROFIT CENTER                                            */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Profit Center'
+
+    @UI.lineItem: [
+        { position: 90, importance: #LOW }
+    ]
+
+    @UI.identification: [
+        { position: 90 }
+    ]
+
+    ProfitCenter;
+
+
+    /*==========================================================*/
+    /* COST CENTER                                              */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Cost Center'
+
+    @UI.lineItem: [
+        { position: 100, importance: #LOW }
+    ]
+
+    @UI.identification: [
+        { position: 100 }
+    ]
+
+    CostCenter;
+
+
+    /*==========================================================*/
+    /* DOCUMENT ITEM DESCRIPTION                                */
+    /*==========================================================*/
+
+    @EndUserText.label: 'Item Description'
+
+    @UI.lineItem: [
+        { position: 110, importance: #HIGH }
+    ]
+
+    @UI.identification: [
+        { position: 110 }
+    ]
+
+    DocumentItemText;
+
+
+    /*==========================================================*/
+    /* TECHNICAL FIELD                                          */
+    /*==========================================================*/
+
+    @UI.hidden: true
+    PostingDate;
+
 }
