@@ -1,0 +1,29 @@
+unmanaged implementation in class zbp_fi_i_acctdocheader unique;
+
+strict ( 2 );
+
+define behavior for ZFI_I_AcctDocHeader alias Header
+  lock master
+  authorization master ( instance )
+{
+  field ( readonly )
+    CompanyCode,
+    FiscalYear,
+    AccountingDocument;
+
+  association _Item;
+  // REMOVED: PreviewPDF, DownloadPDF, DownloadXML actions.
+}
+
+define behavior for ZFI_I_AcctDocItem alias Item
+  lock dependent by _Header
+  authorization dependent by _Header
+{
+  field ( readonly )
+    CompanyCode,
+    FiscalYear,
+    AccountingDocument,
+    AccountingDocumentItem;
+
+  association _Header;
+}

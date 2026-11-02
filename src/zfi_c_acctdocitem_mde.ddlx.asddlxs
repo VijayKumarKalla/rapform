@@ -1,0 +1,91 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName:       'Line Item',
+  typeNamePlural: 'Line Items'
+}
+
+annotate entity ZFI_C_AcctDocItem with
+{
+  /*----------------------------------------------------------*/
+  /* Parent Key Fields - Hidden from Item Table               */
+  /*----------------------------------------------------------*/
+  @UI.hidden: true
+  CompanyCode;
+
+  @UI.hidden: true
+  FiscalYear;
+
+  @UI.hidden: true
+  AccountingDocument;
+
+  /*----------------------------------------------------------*/
+  /* Accounting Document Item Number                          */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 10, importance: #HIGH }
+  ]
+  AccountingDocumentItem;
+
+  /*----------------------------------------------------------*/
+  /* General Ledger Information                               */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 20, importance: #HIGH }
+  ]
+  GLAccount;
+
+  @UI.lineItem: [
+    { position: 30, importance: #MEDIUM }
+  ]
+  FinancialAccountType;
+
+  @UI.lineItem: [
+    { position: 40, importance: #MEDIUM }
+  ]
+  DebitCreditCode;
+
+  /*----------------------------------------------------------*/
+  /* Company Code Currency Amount                             */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 50, importance: #HIGH }
+  ]
+  AmountInCompanyCodeCurrency;
+
+  @UI.hidden: true
+  CompanyCodeCurrency;
+
+  /*----------------------------------------------------------*/
+  /* Transaction Currency Amount                              */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 60, importance: #LOW }
+  ]
+  AmountInTransactionCurrency;
+
+  @UI.hidden: true
+  TransactionCurrency;
+
+  /*----------------------------------------------------------*/
+  /* Supplier Information                                     */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 70, importance: #MEDIUM }
+  ]
+  Supplier;
+
+  /*----------------------------------------------------------*/
+  /* Document Item Description                                */
+  /*----------------------------------------------------------*/
+  @UI.lineItem: [
+    { position: 80, importance: #LOW }
+  ]
+  DocumentItemText;
+
+  /*----------------------------------------------------------*/
+  /* Additional Technical Fields                              */
+  /*----------------------------------------------------------*/
+  @UI.hidden: true
+  PostingDate;
+}

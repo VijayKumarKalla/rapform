@@ -1,0 +1,162 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName:       'Accounting Document',
+  typeNamePlural: 'Accounting Documents',
+  title:          { type: #STANDARD, value: 'AccountingDocument' }
+}
+
+annotate entity ZFI_C_AcctDocHeader with
+{
+  /*----------------------------------------------------------*/
+  /* Object Page Facets                                       */
+  /*----------------------------------------------------------*/
+  @UI.facet: [
+    {
+      id:       'GeneralInfo',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'General Information',
+      position: 10
+    },
+    {
+      id:            'Items',
+      purpose:       #STANDARD,
+      type:          #LINEITEM_REFERENCE,
+      label:         'Line Items',
+      position:      20,
+      targetElement: '_Item'
+    },
+    {
+      id:              'DocumentFiles',
+      purpose:         #STANDARD,
+      type:            #FIELDGROUP_REFERENCE,
+      label:           'Document Files',
+      position:        30,
+      targetQualifier: 'DocumentFiles'
+    }
+  ]
+
+  /*----------------------------------------------------------*/
+  /* Company Code                                             */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 10, importance: #HIGH }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  CompanyCode;
+
+  /*----------------------------------------------------------*/
+  /* Fiscal Year                                              */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 20, importance: #HIGH }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  FiscalYear;
+
+  /*----------------------------------------------------------*/
+  /* Accounting Document Number                               */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 30, importance: #HIGH }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  AccountingDocument;
+
+  /*----------------------------------------------------------*/
+  /* Accounting Document Type                                 */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 40, importance: #MEDIUM }]
+  @UI.selectionField: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  AccountingDocumentType;
+
+  /*----------------------------------------------------------*/
+  /* Posting Date                                             */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 50, importance: #MEDIUM }]
+  @UI.selectionField: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  PostingDate;
+
+  /*----------------------------------------------------------*/
+  /* Document Date                                            */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 60, importance: #LOW }]
+  @UI.identification: [{ position: 60 }]
+  DocumentDate;
+
+  /*----------------------------------------------------------*/
+  /* Document Reference                                       */
+  /*----------------------------------------------------------*/
+  @UI.lineItem:       [{ position: 70, importance: #LOW }]
+  @UI.identification: [{ position: 70 }]
+  DocumentReferenceID;
+
+  /*----------------------------------------------------------*/
+  /* Header Text                                              */
+  /*----------------------------------------------------------*/
+  @UI.identification: [{ position: 80 }]
+  AccountingDocumentHeaderText;
+
+  /*----------------------------------------------------------*/
+  /* Technical Header Fields                                  */
+  /*----------------------------------------------------------*/
+  @UI.hidden: true
+  TransactionCurrency;
+
+  @UI.hidden: true
+  AccountingDocumentCreationDate;
+
+  /*----------------------------------------------------------*/
+  /* Existing PDF Download - Helper Fields                    */
+  /*----------------------------------------------------------*/
+  @UI.hidden: true
+  Filename;
+
+  @UI.hidden: true
+  MimeType;
+
+  /*----------------------------------------------------------*/
+  /* PDF Preview                                              */
+  /*----------------------------------------------------------*/
+  @UI.fieldGroup: [
+    {
+      qualifier: 'DocumentFiles',
+      position: 10
+    }
+  ]
+  PreviewPDF;
+
+  @UI.hidden: true
+  PreviewFilename;
+
+  @UI.hidden: true
+  PreviewMimeType;
+
+  /*----------------------------------------------------------*/
+  /* PDF Download                                             */
+  /*----------------------------------------------------------*/
+  @UI.fieldGroup: [
+    {
+      qualifier: 'DocumentFiles',
+      position: 20
+    }
+  ]
+  Attachment;
+
+  /*----------------------------------------------------------*/
+  /* XML Download                                             */
+  /*----------------------------------------------------------*/
+  @UI.fieldGroup: [
+    {
+      qualifier: 'DocumentFiles',
+      position: 30
+    }
+  ]
+  XMLAttachment;
+
+  @UI.hidden: true
+  XMLFilename;
+
+  @UI.hidden: true
+  XMLMimeType;
+}

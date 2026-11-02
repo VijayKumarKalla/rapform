@@ -1,0 +1,16 @@
+projection;
+strict ( 2 );
+
+define behavior for ZFI_C_AcctDocHeader alias Header
+{
+//  use action PreviewPDF;
+//  use action DownloadPDF;
+//  use action DownloadXML;
+
+  use association _Item;
+}
+
+define behavior for ZFI_C_AcctDocItem alias Item
+{
+  use association _Header;
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Accounting Document Form Data Provider'
+@ObjectModel.leadingEntity.name: 'ZFI_C_ACCTDOCHEADER'
+define service ZFI_ACCTDOC_FORM_DATA {
+  expose ZFI_C_AcctDocHeader as Header;
+  expose ZFI_C_AcctDocItem   as Item;
+}
